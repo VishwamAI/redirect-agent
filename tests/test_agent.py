@@ -1,18 +1,15 @@
-import unittest
+import pytest
 from src.agent import RedirectAgent
 
-class TestRedirectAgent(unittest.TestCase):
-    def setUp(self):
-        self.agent = RedirectAgent()
+@pytest.fixture
+def agent():
+    return RedirectAgent()
 
-    def test_parse_command_terminal(self):
-        self.assertIsNone(self.agent.parse_command("open terminal"))
+def test_parse_command_terminal(agent):
+    assert agent.parse_command("open terminal") is None
 
-    def test_parse_command_browser(self):
-        self.assertIsNone(self.agent.parse_command("browse https://www.example.com"))
+def test_parse_command_browser(agent):
+    assert agent.parse_command("browse https://www.example.com") is None
 
-    def test_parse_command_unrecognized(self):
-        self.assertIsNone(self.agent.parse_command("unrecognized command"))
-
-if __name__ == "__main__":
-    unittest.main()
+def test_parse_command_unrecognized(agent):
+    assert agent.parse_command("unrecognized command") is None
