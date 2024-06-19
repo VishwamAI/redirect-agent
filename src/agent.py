@@ -99,8 +99,9 @@ class RedirectAgent:
 
     def parse_html(self, html_content):
         soup = BeautifulSoup(html_content, 'html.parser')
-        print("Parsed HTML content:")
-        print(soup.prettify()[:500])  # Print first 500 characters of parsed HTML
+        title = soup.title.string if soup.title else "No title"
+        body = soup.body.get_text(separator=' ', strip=True) if soup.body else "No body"
+        return f"Title: {title}\nBody: {body}"
 
     def learn_from_history(self):
         print("Learning from command history...")
