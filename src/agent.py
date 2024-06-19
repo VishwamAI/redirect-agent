@@ -1,6 +1,9 @@
 import os
 import subprocess
 import webbrowser
+import requests
+from langdetect import detect
+
 
 class RedirectAgent:
     def __init__(self):
@@ -21,10 +24,10 @@ class RedirectAgent:
             print("Command not recognized. Please try again.")
 
     def open_terminal(self):
-        if os.name == 'posix':
-            subprocess.call(['gnome-terminal'])
-        elif os.name == 'nt':
-            subprocess.call(['start', 'cmd'], shell=True)
+        if os.name == "posix":
+            subprocess.call(["gnome-terminal"])
+        elif os.name == "nt":
+            subprocess.call(["start", "cmd"], shell=True)
         else:
             print("Unsupported OS for terminal operations.")
 
@@ -52,16 +55,32 @@ class RedirectAgent:
 
     def open_application(self, command):
         app_name = command.replace("open application ", "")
-        if os.name == 'posix':
+        if os.name == "posix":
             subprocess.call([app_name])
-        elif os.name == 'nt':
-            subprocess.call(['start', app_name], shell=True)
+        elif os.name == "nt":
+            subprocess.call(["start", app_name], shell=True)
         else:
             print("Unsupported OS for opening applications.")
 
     def fetch_data(self, command):
-        # Placeholder for fetching data from the internet
-        print("Fetching data...")
+        url = self.extract_url(command)
+        if url:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.text
+                language = self.detect_language(data)
+                print(
+                    f"Fetched data in {language} language: {data[:200]}..."
+                )  # Print first 200 characters
+            except requests.RequestException as e:
+                print(f"Failed to fetch data: {e}")
+        else:
+            print("No URL found in the command.")
+
+    def detect_language(self, data):
+        return detect(data)
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()
