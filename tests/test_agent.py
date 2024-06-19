@@ -50,3 +50,12 @@ def test_fetch_data(mock_detect_language, mock_get, agent):
 
     mock_get.assert_called_with("https://www.example.com")
     mock_detect_language.assert_called_with("This is a test response.")
+
+
+def test_detect_language(agent):
+    assert agent.detect_language("This is a test.") == "en"
+
+
+def test_detect_language_exception(agent):
+    with patch("src.agent.detect", side_effect=LangDetectException):
+        assert agent.detect_language("This is a test.") == "unknown"
