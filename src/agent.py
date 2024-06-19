@@ -2,6 +2,7 @@ import os
 import subprocess
 import webbrowser
 
+
 class RedirectAgent:
     def __init__(self):
         pass
@@ -35,6 +36,7 @@ class RedirectAgent:
             if word.startswith("http://") or word.startswith("https://"):
                 return word
         return None
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()
