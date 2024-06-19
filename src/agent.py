@@ -4,6 +4,7 @@ import webbrowser
 import requests
 from langdetect import detect
 
+
 class RedirectAgent:
     def __init__(self):
         pass
@@ -47,9 +48,7 @@ class RedirectAgent:
     def execute_command(self, command):
         cmd = command.replace("execute ", "")
         try:
-            output = subprocess.check_output(
-                cmd, shell=True, stderr=subprocess.STDOUT
-            )
+            output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
             print(output.decode())
         except subprocess.CalledProcessError as e:
             print(f"Command failed: {e.output.decode()}")
@@ -71,7 +70,9 @@ class RedirectAgent:
                 response.raise_for_status()
                 data = response.text
                 language = self.detect_language(data)
-                print(f"Fetched data in {language} language: {data[:200]}...")  # Print first 200 characters
+                print(
+                    f"Fetched data in {language} language: {data[:200]}..."
+                )  # Print first 200 characters
             except requests.RequestException as e:
                 print(f"Failed to fetch data: {e}")
         else:
@@ -79,6 +80,7 @@ class RedirectAgent:
 
     def detect_language(self, data):
         return detect(data)
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()

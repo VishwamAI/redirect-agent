@@ -28,9 +28,7 @@ def test_parse_command_unrecognized(agent):
 def test_execute_command(mock_check_output, agent):
     mock_check_output.return_value = b"command output"
     assert agent.parse_command("execute ls") is None
-    mock_check_output.assert_called_with(
-        "ls", shell=True, stderr=subprocess.STDOUT
-    )
+    mock_check_output.assert_called_with("ls", shell=True, stderr=subprocess.STDOUT)
 
 
 @patch("subprocess.call")
