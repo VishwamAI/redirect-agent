@@ -26,8 +26,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m venv venv
-        source venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -35,11 +33,9 @@ jobs:
       env:
         PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       run: |
-        source venv/bin/activate
         echo "PYTHONPATH: $PYTHONPATH"
-        venv/bin/python -m pytest -v
+        python -m pytest -v
 
     - name: Lint code
       run: |
-        source venv/bin/activate
-        venv/bin/python -m flake8 src tests
+        python -m flake8 src tests
