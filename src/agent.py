@@ -46,7 +46,9 @@ class RedirectAgent:
     def execute_command(self, command):
         cmd = command.replace("execute ", "")
         try:
-            output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+            output = subprocess.check_output(
+                cmd, shell=True, stderr=subprocess.STDOUT
+            )
             print(output.decode())
         except subprocess.CalledProcessError as e:
             print(f"Command failed: {e.output.decode()}")
