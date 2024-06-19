@@ -58,11 +58,13 @@ def test_detect_language(agent):
 
 
 def test_detect_language_exception(agent):
-    with patch("src.agent.detect", side_effect=LangDetectException):
+    with patch("src.agent.detect", side_effect=LangDetectException("error_code", "error_message")):
         assert agent.detect_language("This is a test.") == "unknown"
 
 
-def test_learn_from_history(agent):
+@patch("subprocess.call")
+def test_learn_from_history(mock_subprocess, agent):
+    mock_subprocess.return_value = None
     agent.parse_command("open terminal")
     agent.parse_command("browse https://www.example.com")
     agent.parse_command("open terminal")
