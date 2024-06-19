@@ -71,8 +71,7 @@ class RedirectAgent:
                 data = response.text
                 language = self.detect_language(data)
                 print(
-                    f"Fetched data in {language} language: "
-                    f"{data[:200]}..."
+                    f"Fetched data in {language} language: " f"{data[:200]}..."
                 )  # Print first 200 characters
             except requests.RequestException as e:
                 print(f"Failed to fetch data: {e}")
