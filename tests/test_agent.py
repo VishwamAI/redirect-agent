@@ -1,7 +1,8 @@
 import pytest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from src.agent import RedirectAgent
 import subprocess
+import requests
 
 
 @pytest.fixture
@@ -38,5 +39,14 @@ def test_open_application(mock_subprocess, agent):
     mock_subprocess.assert_called_with(["gnome-calculator"])
 
 
-def test_fetch_data(agent):
-    assert agent.parse_command("fetch data") is None
+@patch("requests.get")
+@patch("langdetect.detect")
+def test_fetch_data(mock_detect, mock_get, agent):
+    mock_response = Mock()
+    mock_response.text = "This is a test response."
+    mock_get.return_value = mock_response
+    mock_detect.return_value = "en"
+
+    assert agent.parse_command("fetch data https://www.example.com") is None
+    mock_get.assert_called_with("https://www.example.com")
+    mock_detect.assert_called_with("This is a test response.")
