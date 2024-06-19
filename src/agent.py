@@ -124,7 +124,11 @@ class RedirectAgent:
 
         # Example of auto-learning: adapt to user preferences
         if any("open terminal" in command for command in self.command_history):
-            print("You often open the terminal. Would you like me to open it automatically on startup?")
+            print(
+                "You often open the terminal. Would you like me to open it "
+                "automatically on startup?"
+            )
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()
