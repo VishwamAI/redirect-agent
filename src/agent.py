@@ -2,6 +2,7 @@ import os
 import subprocess
 import webbrowser
 
+
 class RedirectAgent:
     def __init__(self):
         pass
@@ -21,10 +22,10 @@ class RedirectAgent:
             print("Command not recognized. Please try again.")
 
     def open_terminal(self):
-        if os.name == 'posix':
-            subprocess.call(['gnome-terminal'])
-        elif os.name == 'nt':
-            subprocess.call(['start', 'cmd'], shell=True)
+        if os.name == "posix":
+            subprocess.call(["gnome-terminal"])
+        elif os.name == "nt":
+            subprocess.call(["start", "cmd"], shell=True)
         else:
             print("Unsupported OS for terminal operations.")
 
@@ -52,16 +53,17 @@ class RedirectAgent:
 
     def open_application(self, command):
         app_name = command.replace("open application ", "")
-        if os.name == 'posix':
+        if os.name == "posix":
             subprocess.call([app_name])
-        elif os.name == 'nt':
-            subprocess.call(['start', app_name], shell=True)
+        elif os.name == "nt":
+            subprocess.call(["start", app_name], shell=True)
         else:
             print("Unsupported OS for opening applications.")
 
     def fetch_data(self, command):
         # Placeholder for fetching data from the internet
         print("Fetching data...")
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()
