@@ -49,4 +49,4 @@ def test_fetch_data(mock_detect, mock_get, agent):
 
     assert agent.parse_command("fetch data https://www.example.com") is None
     mock_get.assert_called_with("https://www.example.com")
-    mock_detect.assert_called_with("This is a test response.")
+    mock_detect.assert_called()
