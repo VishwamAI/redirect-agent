@@ -11,7 +11,7 @@ The VishwamAI Redirect Agent is an advanced redirection agent designed to handle
 - **Browsing**: Open a browser with a specified URL.
 - **Application Redirection**: Open specified desktop applications.
 - **Data Fetching**: Fetch data from the internet and detect its language.
-- **Multi-Language Support**: Detect and handle multiple languages.
+- **Multi-Language Support**: Detect and handle multiple languages, with enhanced exception handling and consistent results.
 
 ## Project Structure
 
