@@ -70,12 +70,15 @@ class RedirectAgent:
                 response = requests.get(url)
                 response.raise_for_status()
                 data = response.text
-                language = detect(data)
+                language = self.detect_language(data)
                 print(f"Fetched data in {language} language: {data[:200]}...")  # Print first 200 characters
             except requests.RequestException as e:
                 print(f"Failed to fetch data: {e}")
         else:
             print("No URL found in the command.")
+
+    def detect_language(self, data):
+        return detect(data)
 
 if __name__ == "__main__":
     agent = RedirectAgent()

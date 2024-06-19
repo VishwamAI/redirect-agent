@@ -40,7 +40,7 @@ def test_open_application(mock_subprocess, agent):
 
 
 @patch("requests.get")
-@patch.object(RedirectAgent, "detect_language", autospec=True)
+@patch.object(RedirectAgent, "detect_language")
 def test_fetch_data(mock_detect_language, mock_get, agent):
     mock_response = Mock()
     mock_response.text = "This is a test response."
@@ -50,4 +50,4 @@ def test_fetch_data(mock_detect_language, mock_get, agent):
     assert agent.parse_command("fetch data https://www.example.com") is None
 
     mock_get.assert_called_with("https://www.example.com")
-    mock_detect_language.assert_called_with(agent, "This is a test response.")
+    mock_detect_language.assert_called_with("This is a test response.")
