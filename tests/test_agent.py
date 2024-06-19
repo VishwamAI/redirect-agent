@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch
 from src.agent import RedirectAgent
+import subprocess
 
 
 @pytest.fixture
