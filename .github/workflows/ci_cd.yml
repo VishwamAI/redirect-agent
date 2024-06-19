@@ -33,7 +33,7 @@ jobs:
 
     - name: Run tests
       env:
-        PYTHONPATH: ${{ github.workspace }}
+        PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
       run: |
         source venv/bin/activate
         echo "PYTHONPATH: $PYTHONPATH"
