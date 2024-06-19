@@ -40,13 +40,14 @@ def test_open_application(mock_subprocess, agent):
 
 
 @patch("requests.get")
-@patch("langdetect.detect")
-def test_fetch_data(mock_detect, mock_get, agent):
+@patch.object(RedirectAgent, "detect_language", autospec=True)
+def test_fetch_data(mock_detect_language, mock_get, agent):
     mock_response = Mock()
     mock_response.text = "This is a test response."
     mock_get.return_value = mock_response
-    mock_detect.return_value = "en"
+    mock_detect_language.return_value = "en"
 
     assert agent.parse_command("fetch data https://www.example.com") is None
+
     mock_get.assert_called_with("https://www.example.com")
-    mock_detect.assert_called()
+    mock_detect_language.assert_called()
