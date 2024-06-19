@@ -11,6 +11,12 @@ class RedirectAgent:
             self.open_terminal()
         elif "browse" in command:
             self.open_browser(command)
+        elif "execute" in command:
+            self.execute_command(command)
+        elif "open application" in command:
+            self.open_application(command)
+        elif "fetch data" in command:
+            self.fetch_data(command)
         else:
             print("Command not recognized. Please try again.")
 
@@ -35,6 +41,27 @@ class RedirectAgent:
             if word.startswith("http://") or word.startswith("https://"):
                 return word
         return None
+
+    def execute_command(self, command):
+        cmd = command.replace("execute ", "")
+        try:
+            output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+            print(output.decode())
+        except subprocess.CalledProcessError as e:
+            print(f"Command failed: {e.output.decode()}")
+
+    def open_application(self, command):
+        app_name = command.replace("open application ", "")
+        if os.name == 'posix':
+            subprocess.call([app_name])
+        elif os.name == 'nt':
+            subprocess.call(['start', app_name], shell=True)
+        else:
+            print("Unsupported OS for opening applications.")
+
+    def fetch_data(self, command):
+        # Placeholder for fetching data from the internet
+        print("Fetching data...")
 
 if __name__ == "__main__":
     agent = RedirectAgent()
