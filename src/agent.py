@@ -9,6 +9,7 @@ import json
 # Ensure consistent results from langdetect
 DetectorFactory.seed = 0
 
+
 class RedirectAgent:
     def __init__(self):
         self.command_history = []
@@ -104,6 +105,7 @@ class RedirectAgent:
             else:
                 command_counts[command] = 1
         print("Command counts:", json.dumps(command_counts, indent=2))
+
 
 if __name__ == "__main__":
     agent = RedirectAgent()

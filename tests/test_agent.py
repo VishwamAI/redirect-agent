@@ -58,7 +58,8 @@ def test_detect_language(agent):
 
 
 def test_detect_language_exception(agent):
-    with patch("src.agent.detect", side_effect=LangDetectException("error_code", "error_message")):
+    with patch("src.agent.detect",
+               side_effect=LangDetectException("error_code", "error_message")):
         assert agent.detect_language("This is a test.") == "unknown"
 
 
