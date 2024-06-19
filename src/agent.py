@@ -101,7 +101,10 @@ class RedirectAgent:
         soup = BeautifulSoup(html_content, 'html.parser')
         title = soup.title.string if soup.title else "No title"
         body = soup.body.get_text(separator=' ', strip=True) if soup.body else "No body"
-        return f"Title: {title}\nBody: {body}"
+        return (
+            f"Title: {title}\n"
+            f"Body: {body}"
+        )
 
     def learn_from_history(self):
         print("Learning from command history...")
