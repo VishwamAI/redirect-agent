@@ -2,6 +2,7 @@ import pytest
 from unittest.mock import patch, Mock
 from src.agent import RedirectAgent
 import subprocess
+from langdetect.lang_detect_exception import LangDetectException
 
 
 @pytest.fixture
@@ -59,3 +60,16 @@ def test_detect_language(agent):
 def test_detect_language_exception(agent):
     with patch("src.agent.detect", side_effect=LangDetectException):
         assert agent.detect_language("This is a test.") == "unknown"
+
+
+def test_learn_from_history(agent):
+    agent.parse_command("open terminal")
+    agent.parse_command("browse https://www.example.com")
+    agent.parse_command("open terminal")
+    agent.parse_command("learn")
+    assert agent.command_history == [
+        "open terminal",
+        "browse https://www.example.com",
+        "open terminal",
+        "learn",
+    ]
