@@ -17,7 +17,7 @@ def test_parse_command_terminal(mock_subprocess, agent):
 
 
 def test_parse_command_browser(agent):
-    assert agent.parse_command("browse https://www.example.com") is None
+    assert agent.parse_command("browse https://www.google.com") is None
 
 
 def test_parse_command_unrecognized(agent):
@@ -66,12 +66,12 @@ def test_detect_language_exception(agent):
 def test_learn_from_history(mock_subprocess, agent):
     mock_subprocess.return_value = None
     agent.parse_command("open terminal")
-    agent.parse_command("browse https://www.example.com")
+    agent.parse_command("browse https://www.google.com")
     agent.parse_command("open terminal")
     agent.parse_command("learn")
     assert agent.command_history == [
         "open terminal",
-        "browse https://www.example.com",
+        "browse https://www.google.com",
         "open terminal",
         "learn",
     ]
