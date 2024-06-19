@@ -5,6 +5,7 @@ import requests
 from langdetect import detect, DetectorFactory
 from langdetect.lang_detect_exception import LangDetectException
 import json
+from bs4 import BeautifulSoup
 
 # Ensure consistent results from langdetect
 DetectorFactory.seed = 0
@@ -84,6 +85,7 @@ class RedirectAgent:
                     f"Fetched data in {language} language: "
                     f"{data[:200]}..."
                 )  # Print first 200 characters
+                self.parse_html(data)
             except requests.RequestException as e:
                 print(f"Failed to fetch data: {e}")
         else:
@@ -94,6 +96,11 @@ class RedirectAgent:
             return detect(data)
         except LangDetectException:
             return "unknown"
+
+    def parse_html(self, html_content):
+        soup = BeautifulSoup(html_content, 'html.parser')
+        print("Parsed HTML content:")
+        print(soup.prettify()[:500])  # Print first 500 characters of parsed HTML
 
     def learn_from_history(self):
         print("Learning from command history...")
