@@ -76,3 +76,9 @@ def test_learn_from_history(mock_subprocess, agent):
         "open terminal",
         "learn",
     ]
+
+
+def test_parse_html(agent):
+    html_content = "<html><head><title>Test</title></head><body><p>Hello, world!</p></body></html>"
+    parsed_html = agent.parse_html(html_content)
+    assert parsed_html == "Title: Test\nBody: Hello, world!"
