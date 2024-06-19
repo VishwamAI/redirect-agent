@@ -28,8 +28,8 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        venv/bin/python -m pip install --upgrade pip
-        venv/bin/python -m pip install -r requirements.txt
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: Run tests
       env:
@@ -37,9 +37,9 @@ jobs:
       run: |
         source venv/bin/activate
         echo "PYTHONPATH: $PYTHONPATH"
-        venv/bin/python -m pytest -v
+        python -m pytest -v
 
     - name: Lint code
       run: |
         source venv/bin/activate
-        venv/bin/python -m flake8 src tests
+        python -m flake8 src tests
