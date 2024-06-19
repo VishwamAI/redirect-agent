@@ -1,7 +1,8 @@
 import os
 import subprocess
 import webbrowser
-
+import requests
+from langdetect import detect
 
 class RedirectAgent:
     def __init__(self):
@@ -63,9 +64,18 @@ class RedirectAgent:
             print("Unsupported OS for opening applications.")
 
     def fetch_data(self, command):
-        # Placeholder for fetching data from the internet
-        print("Fetching data...")
-
+        url = self.extract_url(command)
+        if url:
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.text
+                language = detect(data)
+                print(f"Fetched data in {language} language: {data[:200]}...")  # Print first 200 characters
+            except requests.RequestException as e:
+                print(f"Failed to fetch data: {e}")
+        else:
+            print("No URL found in the command.")
 
 if __name__ == "__main__":
     agent = RedirectAgent()
