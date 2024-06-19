@@ -105,7 +105,7 @@ class RedirectAgent:
 
     def learn_from_history(self):
         print("Learning from command history...")
-        # Simple example: count command occurrences
+        # Advanced learning example: analyze command patterns and suggest improvements
         command_counts = {}
         for command in self.command_history:
             if command in command_counts:
@@ -114,6 +114,17 @@ class RedirectAgent:
                 command_counts[command] = 1
         print("Command counts:", json.dumps(command_counts, indent=2))
 
+        # Suggest improvements based on command patterns
+        if len(self.command_history) > 5:
+            print("You seem to frequently use the following commands:")
+            for command, count in command_counts.items():
+                if count > 1:
+                    print(f"- {command} (used {count} times)")
+            print("Consider creating shortcuts for these commands.")
+
+        # Example of auto-learning: adapt to user preferences
+        if any("open terminal" in command for command in self.command_history):
+            print("You often open the terminal. Would you like me to open it automatically on startup?")
 
 if __name__ == "__main__":
     agent = RedirectAgent()
