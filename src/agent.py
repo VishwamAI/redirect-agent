@@ -2,14 +2,19 @@ import os
 import subprocess
 import webbrowser
 import requests
-from langdetect import detect
+from langdetect import detect, DetectorFactory
+from langdetect.lang_detect_exception import LangDetectException
+import json
 
+# Ensure consistent results from langdetect
+DetectorFactory.seed = 0
 
 class RedirectAgent:
     def __init__(self):
-        pass
+        self.command_history = []
 
     def parse_command(self, command):
+        self.command_history.append(command)
         if "open terminal" in command:
             self.open_terminal()
         elif "browse" in command:
@@ -20,6 +25,8 @@ class RedirectAgent:
             self.open_application(command)
         elif "fetch data" in command:
             self.fetch_data(command)
+        elif "learn" in command:
+            self.learn_from_history()
         else:
             print("Command not recognized. Please try again.")
 
@@ -82,8 +89,21 @@ class RedirectAgent:
             print("No URL found in the command.")
 
     def detect_language(self, data):
-        return detect(data)
+        try:
+            return detect(data)
+        except LangDetectException:
+            return "unknown"
 
+    def learn_from_history(self):
+        print("Learning from command history...")
+        # Simple example: count command occurrences
+        command_counts = {}
+        for command in self.command_history:
+            if command in command_counts:
+                command_counts[command] += 1
+            else:
+                command_counts[command] = 1
+        print("Command counts:", json.dumps(command_counts, indent=2))
 
 if __name__ == "__main__":
     agent = RedirectAgent()
